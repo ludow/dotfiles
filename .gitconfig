@@ -1,0 +1,170 @@
+[apply]
+    # Detect whitespace errors when applying a patch
+    whitespace = fix
+
+[branch]
+   autosetupmerge = true
+
+[color]
+    ui = auto
+
+[core]
+    # Global ignore
+    excludesfile = ~/.gitignore
+    # Global attributes
+    attributesfile = ~/.gitattributes
+    # Make `git rebase` safer on OS X
+    # More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
+    trustctime = false
+    # Treat spaces before tabs, lines that are indented with 8 or more spaces, and
+    # all kinds of trailing whitespace as an error.
+    # [default] trailing-space: looks for spaces at the end of a line
+    # [default] space-before-tab: looks for spaces before tabs at the beginning of
+    # a line
+    whitespace = space-before-tab,indent-with-non-tab,trailing-space
+
+[github]
+  user = ludow
+
+[merge]
+    # Include summaries of merged commits in newly created merge commit messages
+    log = true
+
+[push]
+   default = matching
+
+[user]
+   email = lwerwinski@gmail.com
+   name = Ludovic Werwinski
+
+
+[alias]
+
+    # shortcuts
+    l = log --no-merges
+    m = checkout master
+    s = status -s
+    st = status
+    co = checkout
+
+    # not a fan of random merges
+    pull = pull --ff-only
+
+    # amend
+    amend = commit --amend
+
+    send-note = send-email --annotate
+
+    # various pretty loggers from various places
+    lc = log ORIG_HEAD.. --stat --no-merges
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+    ll = log --graph --date=short
+    lol = log --graph --decorate --pretty=oneline --abbrev-commit
+    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+
+    # from https://git.wiki.kernel.org/index.php/Aliases
+    whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
+    whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+
+    # commits not pushed to $1
+    unpushed = cherry -v
+
+    # what tag contains the sha
+    whatrelease = name-rev --name-only
+
+    # what branch contains the sha
+    contains = branch --contains
+
+    #from http://serverfault.com/questions/175052/how-to-tell-which-local-branch-is-tracking-which-remote-branch-in-git
+    upstream = rev-parse --symbolic-full-name --abbrev-ref HEAD@{upstream}
+
+    #also from http://serverfault.com/questions/175052/how-to-tell-which-local-branch-is-tracking-which-remote-branch-in-git
+    tbranch = branch -vv
+
+    # what got pushed to master in the last hour
+    #  based on http://stackoverflow.com/questions/3357219/expose-the-date-a-commit-was-pushed-to-a-repository
+    justpushed = log origin/master@{\"1 hour ago\"}..origin/master --
+
+    # log everything with $1 string in the diff
+    timegrep = log -S
+
+    # like above, but show the diff
+    diffgrep = log -p -S
+
+    # search logs for a bugzilla like number
+    findbug = "!sh -c 'git log --grep ^$1:' -"
+
+    # show what tag/release a bug was part of
+    bugrelease = "!sh -c 'git name-rev --tags --name-only  $(git log --grep ^$1: --pretty=\"format:%H\n\")' -"
+
+    # from https://gist.github.com/492227
+    lost = !"git fsck | awk '/dangling commit/ {print $3}' | git show --format='SHA1: %C(yellow)%h%Creset %f' --stdin | awk '/SHA1/ {sub(\"SHA1: \", \"\"); print}'"
+
+    # show a log without the formating, occasionaly handy for c&p
+    rawlog = log --format=\"format:commit %H%nAuthor:%an%n%n%B%n\"
+
+    # show a list of branches sorted by time of last commit
+    brage = "!f() { git for-each-ref --sort=committerdate refs/heads $1  --format=\"%(refname:short)\" ; }; g() { for C in $(f $1) ; do git show -s --pretty=format:\"%Cgreen%ci %Cblue%cr%Creset  $C\" \"$C\" -- ; done; }; g "
+
+    # show remote branches as well
+    brageall = !git brage refs/remotes
+
+    tbrage = "!f() { git for-each-ref --sort=committerdate refs/heads $1  --format=\"%(refname:short)\" ; }; g() { for C in $(f $1) ; do UP="$(git rev-parse --symbolic-full-name --abbrev-ref $C@{upstream} 2> /dev/null)"; TRACKING=$?; UP=\""-> $UP \""; if [ $TRACKING -ne 0 ] ; then UP=\"\"; fi;  git show -s --pretty=format:\"%Cgreen%ci %Cblue%cr%Creset  $C $UP\" \"$C\" -- ; done; }; g "
+
+    tbrageall = !git tbrage refs/remotes
+
+    # show a list of tags sorted by when they were tagged
+    tagage = "!sh -c 'git for-each-ref --sort=taggerdate refs/tags --format=\"%(refname:short)\"'"
+
+    # show a list of every branch and show their latests commit, sorted by last commit
+    brlog = "!sh -c 'for C in $(git for-each-ref --sort=committerdate refs/heads --format=\"%(refname:short)\") ; do git show  -s --pretty=format:\"%Cgreen%ci %Cblue%cr%Creset  $C\" \"$C\" -- ; git show --stat -s $C ; echo; done'"
+
+    # show a list of last change in each branch of a given path
+    # roly poly fileheads
+    fileheads = "!sh  -c 'for C in $(git for-each-ref --sort=committerdate refs/heads --format=\"%(refname:short)\"| tac) ; do git show -s --pretty=format:\"%Cgreen%ci %Cblue%cr%Creset  $C\" \"$C\" -- ; git --no-pager log  -p -1 $C -- $0; echo; done'"
+
+    # not useful itself, but handy to remember for use in scripts
+    thisbranch = rev-parse --abbrev-ref HEAD
+
+    # remove a file from index
+    unadd = git reset HEAD
+
+    # url of origin, about 99% of what I use git config --list for
+    cloneurl = config --get remote.origin.url
+
+    # show a list of files with bug fixes in them, sorted by popularity of occurance
+    #  aka, list the buggy files
+    # FIXME: should probably make all the bug regex stuff scripts so it's easier to customize
+    buggyfiles = !"git log -M -C --format=\"format:%n\" --grep=\"^[[:digit:]]\\+:\" --name-only | grep .  | sort | uniq -c | sort -n"
+
+    # from https://github.com/cypher/dotfiles/blob/master/gitconfig
+    ls-ignored = ls-files --exclude-standard --ignored --others
+
+    # shorter alias
+    lsg = ls-github
+
+    # ignore local changes to a file
+    ignore = update-index --assume-unchanged
+
+    # http://sandofsky.com/blog/git-workflow.html
+    # merge code but not history to manually recommit
+    # for emergency use only
+    backrupt = merge --squash
+
+    # https://github.com/wadey/dotfiles/blob/master/gitconfig
+    # check if a branch has been merged into the current HEAD
+    #  if on master, "git merged topic" will tell you if topic
+    #  has been merged
+    merged = !sh -c 'git rev-list HEAD | grep $(git rev-parse $0)'
+
+    # https://github.com/prabirshrestha/ProfilesAndSettings/blob/master/.gitconfig
+    # show tags and any tag annotation (tito adds tag annotations for example)
+    tags = tag -n1 -l
+
+    # https://github.com/aspiers/git-config/blob/master/bin/git-cdup
+    # could be useful for scripts
+    cdup = rev-parse --show-cdup
+
+    # https://github.com/SixArm/sixarm_git_gitconfig/blob/master/gitconfig-alias.txt
+    # Show the date of the first commit
+    log-first-date = !"git log --date-order --date=iso --pretty=\"format:%ad\" --reverse | head -1"
