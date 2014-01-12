@@ -45,9 +45,6 @@ plugins=(git osx)
 
 source $ZSH/oh-my-zsh.sh
 
-# Shell Aliases
-alias subl='/Applications/Sublime\ Text.app/Contents/MacOS/Sublime\ Text -w'
-
 # User configuration
 
 export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
