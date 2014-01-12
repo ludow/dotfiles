@@ -53,6 +53,7 @@ alias subl='/Applications/Sublime\ Text.app/Contents/MacOS/Sublime\ Text -w'
 export PATH="/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin"
 PATH=$PATH:$HOME/bin # Add home bin
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+PATH=$PATH:./node_modules/.bin
 
 # Custom exports
 ## Set EDITOR to /usr/bin/vim if Vim is installed
