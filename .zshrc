@@ -52,6 +52,9 @@ PATH=$PATH:$HOME/bin # Add home bin
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 PATH=$PATH:./node_modules/.bin
 
+# Aliases
+#source $HOME/.aliases
+
 # Custom exports
 ## Set EDITOR to /usr/bin/vim if Vim is installed
 if [ -f /usr/bin/vim ]; then
