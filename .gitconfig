@@ -46,6 +46,8 @@
     s = status -s
     st = status
     co = checkout
+    ru = remote update
+    rup = remote update --prune
 
     # not a fan of random merges
     pull = pull --ff-only
@@ -57,7 +59,7 @@
 
     # various pretty loggers from various places
     lc = log ORIG_HEAD.. --stat --no-merges
-    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
     ll = log --graph --date=short
     lol = log --graph --decorate --pretty=oneline --abbrev-commit
     lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
@@ -71,6 +73,8 @@
 
     # what tag contains the sha
     whatrelease = name-rev --name-only
+
+    review = diff master...
 
     # what branch contains the sha
     contains = branch --contains
