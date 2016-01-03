@@ -44,6 +44,7 @@
     l = log --no-merges
     m = checkout master
     s = status -s
+    b = branch
     st = status
     co = checkout
     ru = remote update
@@ -51,6 +52,11 @@
 
     # not a fan of random merges
     pull = pull --ff-only
+    prom = pull --rebase origin master
+
+    #
+    brm = branch -r --merged
+    brnm = branch -r --no-merged
 
     # amend
     amend = commit --amend
@@ -74,7 +80,7 @@
     # what tag contains the sha
     whatrelease = name-rev --name-only
 
-    review = diff master...
+    review = diff origin/master...
 
     # what branch contains the sha
     contains = branch --contains
@@ -172,3 +178,7 @@
     # https://github.com/SixArm/sixarm_git_gitconfig/blob/master/gitconfig-alias.txt
     # Show the date of the first commit
     log-first-date = !"git log --date-order --date=iso --pretty=\"format:%ad\" --reverse | head -1"
+[filter "media"]
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
