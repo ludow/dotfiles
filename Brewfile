@@ -1,0 +1,21 @@
+cask_args appdir: '/Applications'
+
+tap 'caskroom/cask'
+tap 'homebrew/bundle'
+
+brew 'ack'
+brew 'coreutils'
+brew 'git'
+brew 'grc'
+brew 'openssl'
+brew 'readline'
+brew 'postgresql'
+brew 'rbenv'
+brew 'ruby-build'
+brew 'wget'
+
+cask '1password'
+cask 'atom'
+cask 'firefox'
+cask 'google-chrome'
+cask 'slack'
