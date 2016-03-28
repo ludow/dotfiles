@@ -19,46 +19,31 @@ link_file () {
   if [ -f "$dst" -o -d "$dst" -o -L "$dst" ]
   then
 
-    if [ "$overwrite_all" == "false" ] && [ "$backup_all" == "false" ] && [ "$skip_all" == "false" ]
+    local currentSrc="$(readlink $dst)"
+
+    if [ "$currentSrc" == "$src" ]
     then
 
-      local currentSrc="$(readlink $dst)"
+      skip=true;
 
-      if [ "$currentSrc" == "$src" ]
-      then
+    else
 
-        skip=true;
+      echo "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
+      [s]kip, [o]verwrite, [b]ackup ?"
+      read -n 1 action
 
-      else
-
-        echo "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
-        [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all?"
-        read -n 1 action
-
-        case "$action" in
-          o )
-            overwrite=true;;
-          O )
-            overwrite_all=true;;
-          b )
-            backup=true;;
-          B )
-            backup_all=true;;
-          s )
-            skip=true;;
-          S )
-            skip_all=true;;
-          * )
-            ;;
-        esac
-
-      fi
+      case "$action" in
+        o )
+          overwrite=true;;
+        b )
+          backup=true;;
+        s )
+          skip=true;;
+        * )
+          ;;
+      esac
 
     fi
-
-    overwrite=${overwrite:-$overwrite_all}
-    backup=${backup:-$backup_all}
-    skip=${skip:-$skip_all}
 
     if [ "$overwrite" == "true" ]
     then
@@ -84,8 +69,6 @@ link_file () {
     echo "linked $1 to $2"
   fi
 }
-
-local overwrite_all=false backup_all=false skip_all=false
 
 for src in $(find -H "$DOTFILES_ROOT" -maxdepth 2 -name '*.symlink' -not -path '*.git*')
 do
