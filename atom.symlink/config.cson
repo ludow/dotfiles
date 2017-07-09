@@ -1,7 +1,10 @@
 "*":
   "atom-beautify":
     _analyticsUserId: "3eaeb424-5202-4cf8-af0f-57c4b346b7ec"
+    general:
+      _analyticsUserId: "43482f2d-cbc8-4850-bf69-0c859856d2f7"
   core:
+    closeDeletedFileTabs: true
     disabledPackages: [
       "background-tips"
       "exception-reporting"
@@ -17,6 +20,8 @@
       "tmp"
       "vendor"
     ]
+    projectHome: "/Users/ludow/code"
+    telemetryConsent: "no"
     themes: [
       "unity-ui"
       "glacier-syntax"
@@ -25,7 +30,9 @@
     fontFamily: "Menlo"
     fontSize: 15
     invisibles: {}
+    preferredLineLength: 100
     showIndentGuide: true
+    showInvisibles: true
     softWrapAtPreferredLineLength: true
   "release-notes":
     viewedVersion: "0.89.0"
@@ -35,5 +42,8 @@
       "source.gfm"
       "text.git-commit"
     ]
+  "tree-view":
+    hideVcsIgnoredFiles: true
+    showOnRightSide: true
   welcome:
     showOnStartup: false
