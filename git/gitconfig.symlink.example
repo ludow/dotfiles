@@ -20,6 +20,9 @@
         branch = auto
         ui = true
 
+[commit]
+  gpgsign = true
+
 [core]
         excludesfile = ~/.gitignore
         editor = vim
