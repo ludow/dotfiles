@@ -30,6 +30,7 @@ plugins=(git common-aliases npm osx vagrant)
 # User configuration
 
 export PATH=$HOME/.bin:/usr/local/sbin:/usr/local/bin:$PATH
+export PATH=./node_modules/.bin:$PATH
 
 source $ZSH/oh-my-zsh.sh
 
