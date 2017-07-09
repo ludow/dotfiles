@@ -44,10 +44,16 @@ else
   export EDITOR='mvim'
 fi
 
-# Config editing
+[ -f ~/.zsh/aliases ] && source  ~/.zsh/aliases
+[ -f ~/.zsh/externals ] && source  ~/.zsh/externals
 
-alias zshconfig="atom ~/.zshrc"
-alias ohmyzsh="atom ~/.oh-my-zsh"
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 export NVM_DIR="/Users/ludow/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/ludow/code/google-cloud-sdk/path.zsh.inc' ]; then source '/Users/ludow/code/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/ludow/code/google-cloud-sdk/completion.zsh.inc' ]; then source '/Users/ludow/code/google-cloud-sdk/completion.zsh.inc'; fi

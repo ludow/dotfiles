@@ -1,0 +1,3 @@
+if [ -d "./include" ]; then
+  for file in $(find ~/.zsh/include -type f); do echo "$file"; done
+fi
